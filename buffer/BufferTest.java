@@ -47,7 +47,7 @@ public class BufferTest {
 		System.out.println("buffer current size: " + buf.size());
 		System.out.println("current Map: " + buf.returnMap());
 		System.out.println("current Buffer: "+ buf.returnBuffer());	
-		System.out.println("should return b: " + buf.get(0));
+		System.out.println("should return null: " + buf.get(0));
 				
 		System.out.println();
 		
@@ -55,7 +55,7 @@ public class BufferTest {
 		System.out.println("buffer current size: " + buf.size());
 		System.out.println("current Map: " + buf.returnMap());
 		System.out.println("current Buffer: "+ buf.returnBuffer());	
-		System.out.println("should return x: " + buf.get(0));
+		System.out.println("should return c: " + buf.get(0));
 
 		System.out.println();
 		

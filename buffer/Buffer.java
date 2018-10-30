@@ -29,6 +29,7 @@ public class Buffer {
 	
 	public void set ( Integer position, Character c ) {
 		
+		// if buffer does not contain position, simply add it to both buffer and map.
 		if ( !buffer.containsKey(position) ) {
 		
 			buffer.put(position, c);
@@ -38,10 +39,22 @@ public class Buffer {
 		} else {
 			
 			Character curr = buffer.get(position);
+			
+			// removing from map
 			PriorityQueue<Integer> temp = map.get(curr);
 			temp.remove(position);
-			map.put(curr, temp);
-			buffer.remove(position, curr);
+			
+			if ( temp.size() != 0 ) {
+				map.put(curr, temp);
+			} else {
+				// removing character from map if its PriorityQueue size is zero.
+				map.remove(curr);
+			}
+			
+			// removing from buffer
+			buffer.remove(position, curr);	
+			
+			// updating buffer and map with (position, c).
 			buffer.put(position, c);
 			this.updateMap(c, position);
 			
@@ -69,6 +82,11 @@ public class Buffer {
 			
 			map.get(curr).remove(position);
 			
+			// removing character from map if its PriorityQueue size is zero.
+			if ( map.get(curr).size() == 0 ) {
+				map.remove(curr);
+			}
+			
 		}
 		
 		buffer.remove(position);
@@ -77,27 +95,6 @@ public class Buffer {
 	}
 
 
-	public HashMap<Integer, Character> returnBuffer () {
-		return buffer;
-	}
-
-	
-	public int size() {
-		return size;
-	}
-	
-	
-	public Character get ( Integer position ) {
-		
-		return buffer.get(position);
-	}
-	
-	
-	public HashMap<Character, PriorityQueue<Integer>> returnMap() {
-		return map;
-	}
-	
-	
 	private void updateMap ( Character c, Integer position ) {
 		
 		if ( !map.containsKey(c) ) {
@@ -112,7 +109,30 @@ public class Buffer {
 		}
 		
 	}
+
+	
+	public HashMap<Integer, Character> returnBuffer () {
+		return buffer;
+	}
+
+	
+	public int size() {
+		return size;
+	}
+	
+	
+	public Character get ( Integer position ) {
 		
+		return buffer.get(position);
+		
+	}
+	
+	
+	public HashMap<Character, PriorityQueue<Integer>> returnMap() {
+		return map;
+	}
+	
+	
 }
 
 
