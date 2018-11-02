@@ -1,5 +1,6 @@
 package buffer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -17,13 +18,25 @@ public class Buffer {
 	
 	private HashMap<Integer, Character> buffer;
 	private HashMap<Character, PriorityQueue<Integer>> map;
-	private Integer size;
+	
+	// adding this to keep track of occupied indices in the buffer: 
+	private PriorityQueue<Integer> trackPositions;
+	
+	// actual number of characters inside the buffer
+	private Integer numOfChars;
+	
+	// private Integer size;
 	
 	
 	public Buffer() {
 		buffer = new HashMap<>();
 		map = new HashMap<>();
-		size = 0;
+		
+		// this priority queue keeps track of indices in reverse order ( max heap )
+		trackPositions = new PriorityQueue<Integer>(Collections.reverseOrder());
+		numOfChars = 0;
+		
+		// size = 0;
 	}
 	
 	
@@ -33,8 +46,13 @@ public class Buffer {
 		if ( !buffer.containsKey(position) ) {
 		
 			buffer.put(position, c);
+			
+			trackPositions.add(position);
+			numOfChars++;
+			
 			this.updateMap(c, position);
-			size++;
+			
+			//size++;
 			
 		} else {
 			
@@ -89,11 +107,14 @@ public class Buffer {
 			
 		}
 		
+		trackPositions.remove(position);
+		numOfChars--;
 		buffer.remove(position);
 		
-		size--;
+		// size--;
+		
 	}
-
+	
 
 	private void updateMap ( Character c, Integer position ) {
 		
@@ -109,29 +130,51 @@ public class Buffer {
 		}
 		
 	}
-
+	
+	
+	public String print () {
+		
+		String output = "";
+		
+		for ( int i = 0; i <= maxIndex(); i++ ) {
+			
+			if ( buffer.get(i) != null ) {
+				output += buffer.get(i);
+			} 
+		
+		}
+		return output;
+	}
+	
 	
 	public HashMap<Integer, Character> returnBuffer () {
 		return buffer;
 	}
 
 	
-	public int size() {
-		return size;
+	public int bufferSize() {
+		return numOfChars;
+	}
+	
+	
+	public int maxIndex() {
+		return trackPositions.peek();
+	}
+	
+	
+	public PriorityQueue<Integer> CurrPositions() {	
+		return trackPositions;	
 	}
 	
 	
 	public Character get ( Integer position ) {
-		
 		return buffer.get(position);
-		
 	}
 	
 	
-	public HashMap<Character, PriorityQueue<Integer>> returnMap() {
-		return map;
+	public HashMap<Character, PriorityQueue<Integer>> returnMap() {	
+		return map;	
 	}
-	
 	
 }
 
