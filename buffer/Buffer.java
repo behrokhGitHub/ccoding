@@ -4,15 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-/*
- * Implement a buffer data structure "Buffer" that allows setting a character at a given position 
- * (indexes from 0 and up) in the buffer, and finding the lowest position of a given character.  
- * As before, design the interfaces and analyze each method's big-O.  
- * After this is done, also add support for deleting a character from a position:
- * buf.Set(position, character)
- * buf.Find(character)
- * additional work: buf.Delete(position)
- */
 
 public class Buffer {
 	
@@ -39,23 +30,24 @@ public class Buffer {
 		// size = 0;
 	}
 	
-	
+	// big-O: O(n) 
 	public void set ( Integer position, Character c ) {
 		
 		// if buffer does not contain position, simply add it to both buffer and map.
-		if ( !buffer.containsKey(position) ) {
+		// Big-0: O(n) + O(n) + O(logn) + O(1) + O(n) = O(n)
+		if ( !buffer.containsKey(position) ) { 
 		
-			buffer.put(position, c);
+			buffer.put(position, c); 
 			
-			trackPositions.add(position);
-			numOfChars++;
+			trackPositions.add(position); 
+			numOfChars++; 
 			
-			this.updateMap(c, position);
+			this.updateMap(c, position); 
 			
 			//size++;
 			
 		} else {
-			
+			// Big-0: (n)
 			Character curr = buffer.get(position);
 			
 			// removing from map
