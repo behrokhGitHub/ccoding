@@ -6,11 +6,7 @@ package foo;
 //import java.util.List;
 //import java.util.Queue;
 
-/*
-* Implement a data structure "Foo" that holds a set of strings and also have an iterator over its contents 
-* that traverses the strings in chronological order (the order in which they were added).  
-* The API should support these methods (you design the interfaces), and analyze each method's big-O performance:
-*/
+
 
 
 public class Foo {
